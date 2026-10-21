@@ -46,5 +46,6 @@ class ProfilAdapter(
         }
 
         return view
+
     }
 }

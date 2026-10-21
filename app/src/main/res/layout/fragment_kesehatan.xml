@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FAF8FC"
-    tools:context=".Profil.ProfilFragment">
+    tools:context=".Kesehatan.KesehatanFragment">
 
     <!-- 1. Header Khusus Toolbar -->
     <com.google.android.material.appbar.AppBarLayout

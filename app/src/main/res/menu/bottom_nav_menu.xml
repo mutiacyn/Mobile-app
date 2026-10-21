@@ -5,13 +5,14 @@
         android:icon="@drawable/ic_home"
         android:title="Beranda" />
     <item
-        android:id="@+id/health"
-        android:icon="@drawable/ic_health"
-        android:title="Health" />
-    <item
         android:id="@+id/jadwal"
         android:icon="@drawable/ic_calender"
         android:title="Jadwal" />
+    <item
+        android:id="@+id/health"
+        android:icon="@drawable/ic_health"
+        android:title="Pengaturan" />
+
     <item
         android:id="@+id/profil"
         android:icon="@drawable/ic_profil"

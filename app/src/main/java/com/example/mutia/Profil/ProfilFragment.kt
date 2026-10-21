@@ -1,14 +1,15 @@
 package com.example.mutia.Profil
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.SimpleAdapter
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.example.mutia.LoginActivity
 import com.example.mutia.R
 import com.example.mutia.databinding.FragmentProfilBinding
 
@@ -29,7 +30,7 @@ class ProfilFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentProfilBinding.inflate(inflater, container, false)
         return binding.root
@@ -37,11 +38,9 @@ class ProfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
-//        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Halaman More"
 
         val activity = requireActivity() as AppCompatActivity
-        binding.listMessageItems.adapter = adapter
+
         activity.setSupportActionBar(binding.toolbar)
 
         // 3. Konfigurasi Judul, Subtitle, Logo, dan Navigation Icon
@@ -54,19 +53,29 @@ class ProfilFragment : Fragment() {
             setDisplayUseLogoEnabled(true)
         }
 
-        val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            dataList
-        )
-        binding.listMessageItems.adapter = adapter
-        binding.listMessageItems.setOnItemClickListener { _, _, position, _ ->
-            val selectedItem = dataList[position]
-            Toast.makeText(
-                requireContext(), "Kamu memilih: $selectedItem",
-                Toast.LENGTH_SHORT
-            ).show()
-
+        binding.btnLogout.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Logout")
+                .setMessage("Apakah Anda yakin ingin keluar?")
+                .setPositiveButton("Ya") { dialog, _ ->
+                    val sharedPref = requireContext().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
+                    val editor = sharedPref.edit()
+                    editor.clear()
+                    editor.apply()
+                    dialog.dismiss()
+                    startActivity(Intent(requireContext(), LoginActivity::class.java))
+                    requireActivity().finish()
+                }
+                .setNegativeButton("Batal") { dialog, _ -> dialog.dismiss() }
+                .show()
         }
+        val adapter = ProfilAdapter(requireContext(), profilList)
+        binding.listMessageItems.adapter = adapter
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
