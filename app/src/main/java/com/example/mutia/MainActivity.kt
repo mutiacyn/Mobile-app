@@ -26,27 +26,29 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, DetailActivity::class.java))
             finish()
         }
-        binding.btnLogout.setOnClickListener {
-            val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
-            AlertDialog.Builder(this)
-                .setTitle("Logout")
-                .setMessage("Apakah Anda yakin ingin keluar?")
-                .setPositiveButton("Ya") { dialog, _ ->
-                    val editor = sharedPref.edit()
-                    editor.clear()
-                    editor.apply()
-                    dialog.dismiss()
-                    finish()
-                }
-                .setNegativeButton("Batal") { dialog, _ -> dialog.dismiss() }
-                .show()
-        }
+//        binding.btnLogout.setOnClickListener {
+//            val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
+//            AlertDialog.Builder(this)
+//                .setTitle("Logout")
+//                .setMessage("Apakah Anda yakin ingin keluar?")
+//                .setPositiveButton("Ya") { dialog, _ ->
+//                    val editor = sharedPref.edit()
+//                    editor.clear()
+//                    editor.apply()
+//                    dialog.dismiss()
+//                    finish()
+//                }
+//                .setNegativeButton("Batal") { dialog, _ -> dialog.dismiss() }
+//                .show()
+//        }
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             subtitle = "MomCare"
             title = "Beranda"
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
+            setLogo(R.drawable.momcare_logo)
+            setDisplayUseLogoEnabled(true)
         }
     }
 }

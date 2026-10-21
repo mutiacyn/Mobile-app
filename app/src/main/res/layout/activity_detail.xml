@@ -12,18 +12,19 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.MaterialComponents.Light">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            app:navigationIconTint="#1B1B21"
+            android:background="#FBF8FF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@android:color/white"
-            app:subtitleTextColor="@android:color/white"
+            app:titleTextColor="#1B1B21"
+            app:subtitleTextColor="#8A4B5E"
             app:layout_scrollFlags="scroll|enterAlways"
             />
 

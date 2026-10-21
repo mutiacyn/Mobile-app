@@ -30,6 +30,8 @@ class DetailActivity : AppCompatActivity() {
             title = "Halaman Detail"
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
+            setLogo(R.drawable.momcare_logo)
+            setDisplayUseLogoEnabled(true)
 
         }
 
