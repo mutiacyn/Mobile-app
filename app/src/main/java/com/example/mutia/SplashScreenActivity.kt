@@ -8,7 +8,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.mutia.databinding.ActivityLoginBinding
-import com.example.mutia.databinding.ActivityMainBinding
 import com.example.mutia.databinding.ActivitySplashScreenBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -21,7 +20,7 @@ class SplashScreenActivity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
         val isLogin = sharedPref.getBoolean("isLogin", false)
         if (isLogin) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, BaseActivity::class.java))
             finish()
             return
         }
@@ -39,7 +38,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
             val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
             val isLogin = sharedPref.getBoolean("isLogin", false)
-            val target = if (isLogin) MainActivity::class.java else LoginActivity::class.java
+            val target = if (isLogin) BaseActivity::class.java else LoginActivity::class.java
             startActivity(Intent(this@SplashScreenActivity, target))
             finish()
         }

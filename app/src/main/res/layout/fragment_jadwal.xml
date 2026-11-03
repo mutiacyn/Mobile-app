@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- LOKASI: res/layout/fragment_jadwal.xml -->
+<!-- FUNGSI: halaman Jadwal. Kalender sudah ada di dalam file ini (tanggal diisi lewat Kotlin di JadwalFragment) -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,9 +10,8 @@
     android:background="#FAF8FC"
     tools:context=".Jadwal.JadwalFragment">
 
-    <!-- AppBar Header -->
+    <!-- Toolbar -->
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.MaterialComponents.Light"
@@ -21,16 +22,19 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#FBF8FF"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:subtitleTextColor="#8A4B5E"
             app:titleTextColor="#1B1B21" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Konten Scrollable -->
+    <!-- Konten -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         android:fillViewport="true"
+        android:paddingBottom="90dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -39,44 +43,283 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Card Kalender -->
+            <!-- KALENDER -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                app:strokeColor="#E8CFDC"
+                app:strokeWidth="1dp">
 
-                <CalendarView
-                    android:id="@+id/calendarView"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Bulan, badge "Bulan Ini", dan navigasi -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvBulanTahun"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="November 2026"
+                            android:textColor="#33252D"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvBulanIni"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="2dp"
+                            android:text="Bulan Ini"
+                            android:textColor="#8A4B5E"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/btnBulanSebelumnya"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="Bulan sebelumnya"
+                            android:gravity="center"
+                            android:text="‹"
+                            android:textColor="#8A4B5E"
+                            android:textSize="28sp" />
+
+                        <TextView
+                            android:id="@+id/btnBulanBerikutnya"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="Bulan berikutnya"
+                            android:gravity="center"
+                            android:text="›"
+                            android:textColor="#8A4B5E"
+                            android:textSize="28sp" />
+
+                    </LinearLayout>
+
+                    <!-- Nama hari -->
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="12dp"
+                        android:columnCount="7">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:text="Sen"
+                            android:textColor="#827780"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:text="Sel"
+                            android:textColor="#827780"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:text="Rab"
+                            android:textColor="#827780"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:text="Kam"
+                            android:textColor="#827780"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:text="Jum"
+                            android:textColor="#827780"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:text="Sab"
+                            android:textColor="#827780"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:text="Min"
+                            android:textColor="#827780"
+                            android:textSize="12sp" />
+
+                    </GridLayout>
+
+                    <!-- Tanggal kalender: diisi lewat Kotlin (42 sel) -->
+                    <GridLayout
+                        android:id="@+id/gridKalender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alignmentMode="alignMargins"
+                        android:columnCount="7"
+                        android:rowCount="6"
+                        android:useDefaultMargins="false" />
+
+                    <!-- Legenda -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/dotLegend1"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="Hari Terpilih"
+                            android:textColor="#827780"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:id="@+id/dotLegend2"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="Imunisasi"
+                            android:textColor="#827780"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:id="@+id/dotLegend3"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="Rutinitas"
+                            android:textColor="#827780"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Judul List -->
-            <TextView
-                android:id="@+id/tvSelectedDateHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:text="Agenda Hari Ini"
-                android:textColor="#1B1B21"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <!-- ListView untuk Daftar Agenda Dummy -->
-            <ListView
-                android:id="@+id/listJadwal"
+            <!-- Judul pengingat -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:divider="@null"
-                android:dividerHeight="8dp"
-                android:nestedScrollingEnabled="true" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Pengingat Mendatang"
+                    android:textColor="#33252D"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvJumlahPengingat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3 Jadwal"
+                    android:textColor="#827780"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- Daftar pengingat (tinggi diatur lewat Kotlin supaya semua item tampil) -->
+            <ListView
+                android:id="@+id/listViewJadwal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10dp"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                tools:listitem="@layout/item_jadwal" />
+
+            <TextView
+                android:id="@+id/tvJadwalKosong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="24dp"
+                android:text="Belum ada pengingat mendatang."
+                android:textColor="#827780"
+                android:textSize="13sp"
+                android:visibility="gone" />
 
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
+
+    <!-- Tombol tambah (melayang di atas Bottom Navigation) -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btnTambahJadwal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="Tambah jadwal"
+        android:text="Tambah Jadwal"
+        android:textColor="#FFFFFF"
+        app:backgroundTint="#8A4B5E"
+        app:icon="@android:drawable/ic_input_add"
+        app:iconTint="#FFFFFF" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

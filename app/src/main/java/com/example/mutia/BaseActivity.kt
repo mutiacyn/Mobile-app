@@ -62,5 +62,9 @@ class BaseActivity : AppCompatActivity() {
             // .addToBackStack(null) sengaja dinonaktifkan: saat back langsung keluar aplikasi
             .commit()
     }
+
+    fun navigateToTab(itemId: Int) {
+        binding.bottomNavView.selectedItemId = itemId
+    }
 }
 

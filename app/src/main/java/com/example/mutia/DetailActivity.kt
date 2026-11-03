@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.mutia.databinding.ActivityDetailBinding
 import com.example.mutia.databinding.ActivityLoginBinding
+import com.google.android.material.snackbar.Snackbar
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -36,13 +37,26 @@ class DetailActivity : AppCompatActivity() {
         }
 
 
+
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                val intent = Intent(this, BaseActivity::class.java)
-                startActivity(intent)
-                finish()
+
+                Snackbar.make(
+                    binding.root,
+                    "Kembali ke halaman utama",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+
+                binding.root.postDelayed({
+
+                    val intent = Intent(this, BaseActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
+                }, 1500)
+
                 true
             }
 
