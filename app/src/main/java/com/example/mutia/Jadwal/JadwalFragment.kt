@@ -96,6 +96,23 @@ class JadwalFragment : Fragment() {
         // ---------- ListView pengingat (Custom Adapter) ----------
         muatDaftar()
 
+        // ---------- ChipGroup Filter ----------
+        binding.chipGroupFilter.setOnCheckedStateChangeListener { _, checkedIds ->
+            val checkedId = checkedIds.firstOrNull() ?: R.id.chipSemua
+            val todayKey = keyFormat.format(today.time)
+            val mendatang = jadwalList.filter { it.dateKey >= todayKey }.sortedBy { it.dateKey }
+            val filtered = when (checkedId) {
+                R.id.chipPemeriksaan -> mendatang.filter { it.kategori == "Pemeriksaan" }
+                R.id.chipRutinitas -> mendatang.filter { it.kategori == "Rutinitas" }
+                R.id.chipImunisasi -> mendatang.filter { it.kategori == "Imunisasi" }
+                else -> mendatang // Semua
+            }
+            binding.listViewJadwal.adapter = JadwalAdapter(requireContext(), filtered)
+            binding.tvJumlahPengingat.text = "${filtered.size} Jadwal"
+            binding.tvJadwalKosong.visibility = if (filtered.isEmpty()) View.VISIBLE else View.GONE
+            aturTinggiListView()
+        }
+
         // ---------- Tombol Tambah Jadwal ----------
         binding.btnTambahJadwal.setOnClickListener {
             Toast.makeText(ctx, "Tambah jadwal", Toast.LENGTH_SHORT).show()

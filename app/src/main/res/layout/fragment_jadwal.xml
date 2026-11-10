@@ -253,6 +253,54 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- CHIP GROUP FILTER KATEGORI -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:selectionRequired="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipSemua"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Semua"
+                        app:chipBackgroundColor="#F8E6EE"
+                        app:chipStrokeColor="#8A4B5E" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipPemeriksaan"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pemeriksaan" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipRutinitas"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rutinitas" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipImunisasi"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Imunisasi" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
             <!-- Judul pengingat -->
             <LinearLayout
                 android:layout_width="match_parent"

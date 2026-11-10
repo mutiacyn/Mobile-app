@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="800dp"
+    android:viewportWidth="360"
+    android:viewportHeight="800">
+
+    <!-- Background utama -->
+    <path
+        android:fillColor="#F5E8EF"
+        android:pathData="M0,0 H360 V800 H0 Z"/>
+
+    <!-- Awan bagian tengah -->
+    <path
+        android:fillColor="#F4F8E9"
+        android:pathData="
+            M0,170
+            C35,120 78,125 105,155
+            C125,75 195,35 250,85
+            C295,110 305,150 310,175
+            C330,150 350,145 360,160
+            L360,560
+            C325,590 280,580 255,550
+            C210,600 145,595 115,550
+            C65,585 20,570 0,540
+            Z"/>
+
+    <!-- Awan bawah -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="
+            M0,650
+            C45,610 95,620 120,660
+            C160,600 230,600 270,650
+            C310,615 340,630 360,650
+            V800 H0 Z"/>
+
+</vector>

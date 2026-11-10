@@ -5,40 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Tutorial.Tutorial3Fragment"
-    android:background="@android:color/white">
+    android:background="@drawable/bg_wave">
 
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="220dp"
-        android:src="@mipmap/ic_launcher_round"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardIllustration"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="140dp"
+        app:cardBackgroundColor="#F5E8EF"
+        app:cardCornerRadius="70dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="Logo" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_health"
+            app:tint="#8A4B5E"
+            android:contentDescription="Artikel" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="36dp"
         android:gravity="center"
-        android:text="Selamat Datang di Fitur Pesan!"
-        android:textSize="20sp"
+        android:text="Artikel &amp; Konsultasi"
+        android:textColor="#1B1B21"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/cardIllustration" />
+
     <TextView
         android:id="@+id/tvDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Dengan fitur ini, kamu bisa melihat daftar pesan masuk dari pengguna lain."
+        android:lineSpacingExtra="5dp"
+        android:text="Temukan berbagai informasi, tips kesehatan kehamilan, dan panduan dari sumber terpercaya."
+        android:textColor="#666666"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
