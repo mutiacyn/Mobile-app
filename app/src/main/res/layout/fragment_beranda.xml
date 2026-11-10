@@ -322,6 +322,14 @@
             </LinearLayout>
 
 
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gridMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:columnCount="1"
+                app:useDefaultMargins="true">
+
             <!-- 4. CARD KESEHATAN IBU -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialCardView2"
@@ -498,6 +506,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            </androidx.gridlayout.widget.GridLayout>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
