@@ -30,6 +30,7 @@ class TutorialActivity : AppCompatActivity() {
         )
         val adapter = TutorialFragmentAdapter(this, fragmentsList)
         binding.tutorialMessageViewPager.adapter = adapter
+        binding.dotIndicator.attachTo(binding.tutorialMessageViewPager)
 
         binding.btnSkip.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)

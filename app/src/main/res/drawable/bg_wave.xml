@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="360dp"
     android:height="800dp"
@@ -12,10 +9,9 @@
     <path
         android:fillColor="#F5E8EF"
         android:pathData="M0,0 H360 V800 H0 Z"/>
-
     <!-- Awan bagian tengah -->
     <path
-        android:fillColor="#F4F8E9"
+        android:fillColor="#FFFFFF"
         android:pathData="
             M0,170
             C35,120 78,125 105,155
@@ -27,7 +23,6 @@
             C210,600 145,595 115,550
             C65,585 20,570 0,540
             Z"/>
-
     <!-- Awan bawah -->
     <path
         android:fillColor="#FFFFFF"
@@ -37,5 +32,4 @@
             C160,600 230,600 270,650
             C310,615 340,630 360,650
             V800 H0 Z"/>
-
 </vector>
