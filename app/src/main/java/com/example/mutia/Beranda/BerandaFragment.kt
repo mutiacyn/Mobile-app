@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mutia.BaseActivity
 import com.example.mutia.DetailActivity
+import com.example.mutia.Edukasi.EdukasiActivity
 import com.example.mutia.R
 import com.example.mutia.databinding.FragmentBerandaBinding
 
@@ -36,6 +37,9 @@ class BerandaFragment : Fragment() {
         binding.btnArtikelKesehatan.setOnClickListener {
             val intent = Intent(requireContext(), WebViewActivity::class.java)
             startActivity(intent)
+        }
+        binding.btnEdukasi.setOnClickListener {
+            startActivity(Intent(requireContext(), EdukasiActivity::class.java))
         }
         val activity = requireActivity() as AppCompatActivity
         activity.setSupportActionBar(binding.toolbar)
