@@ -13,11 +13,13 @@ class EdukasiAdapter(
     private val onItemClick: (EdukasiModel) -> Unit
 ) : RecyclerView.Adapter<EdukasiAdapter.EdukasiViewHolder>() {
 
+    // Warna latar lembut bergantian agar tampilan lebih hidup
+    private val warnaLatar = listOf("#FCE4EC", "#F3E5F5", "#E8F5E9", "#FFF3E0", "#E3F2FD")
+
     // ViewHolder: menyimpan binding dari item_edukasi.xml untuk satu baris
     inner class EdukasiViewHolder(val binding: ItemEdukasiBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    // Dipanggil saat baris baru perlu dibuat
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EdukasiViewHolder {
         val binding = ItemEdukasiBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
@@ -25,17 +27,15 @@ class EdukasiAdapter(
         return EdukasiViewHolder(binding)
     }
 
-    // Dipanggil setiap baris perlu diisi data (bisa berkali-kali karena baris didaur ulang)
     override fun onBindViewHolder(holder: EdukasiViewHolder, position: Int) {
         val item = itemList[position]
         with(holder.binding) {
             tvEdukasiTitle.text = item.title
             tvEdukasiSubtitle.text = item.subtitle
-
-            Glide.with(holder.itemView.context)
-                .load(item.imageUrl)
-                .placeholder(ColorDrawable(Color.parseColor("#F3EEF8")))
-                .into(imgEdukasi)
+            tvEdukasiEmoji.text = item.emoji
+            layoutGambar.setBackgroundColor(
+                Color.parseColor(warnaLatar[position % warnaLatar.size])
+            )
 
             root.setOnClickListener { onItemClick(item) }
         }
