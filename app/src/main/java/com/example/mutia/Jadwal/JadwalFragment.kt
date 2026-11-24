@@ -2,6 +2,7 @@
 // FUNGSI: halaman Jadwal: Toolbar, kalender (diisi lewat kode), daftar pengingat, tombol Tambah
 package com.example.mutia.Jadwal
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -15,8 +16,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.example.mutia.Data.AppDatabase
+import com.example.mutia.Data.Entity.toModel
+import com.example.mutia.Jadwal.Form.JadwalFormActivity
 import com.example.mutia.R
 import com.example.mutia.databinding.FragmentJadwalBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -33,21 +40,23 @@ class JadwalFragment : Fragment() {
     private val bulanTampil = Calendar.getInstance()          // bulan yang sedang ditampilkan
     private var tanggalDipilih = keyFormat.format(today.time)  // default: hari ini
 
+    private lateinit var db: AppDatabase
+    private val jadwalList = mutableListOf<JadwalModel>()
     // Data jadwal (seperti messageList di MessageFragment), ganti dengan datamu sendiri
-    private val jadwalList = listOf(
-        JadwalModel(
-            "Pemeriksaan Kehamilan", "2026-11-10", "10 November 2026 • 09.00 WIB",
-            "Terjadwal", "Pemeriksaan", R.drawable.ic_health
-        ),
-        JadwalModel(
-            "Pengingat Konsumsi Vitamin", "2026-11-12", "12 November 2026 • 08.00 WIB",
-            "Mendatang", "Rutinitas", R.drawable.ic_health
-        ),
-        JadwalModel(
-            "Pemeriksaan USG", "2026-11-20", "20 November 2026 • 10.00 WIB",
-            "Belum dilakukan", "Imunisasi", R.drawable.ic_health
-        )
-    )
+//    private val jadwalList = listOf(
+//        JadwalModel(
+//            "Pemeriksaan Kehamilan", "2026-11-10", "10 November 2026 • 09.00 WIB",
+//            "Terjadwal", "Pemeriksaan", R.drawable.ic_health
+//        ),
+//        JadwalModel(
+//            "Pengingat Konsumsi Vitamin", "2026-11-12", "12 November 2026 • 08.00 WIB",
+//            "Mendatang", "Rutinitas", R.drawable.ic_health
+//        ),
+//        JadwalModel(
+//            "Pemeriksaan USG", "2026-11-20", "20 November 2026 • 10.00 WIB",
+//            "Belum dilakukan", "Imunisasi", R.drawable.ic_health
+//        )
+//    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,6 +82,7 @@ class JadwalFragment : Fragment() {
         }
 
         val ctx = requireContext()
+        db = AppDatabase.getInstance(ctx)
 
         // Bentuk badge "Bulan Ini" dan titik legenda
         binding.tvBulanIni.background = shapeBg(ctx, Color.parseColor("#F8E6EE"), 8f)
@@ -94,29 +104,86 @@ class JadwalFragment : Fragment() {
         }
 
         // ---------- ListView pengingat (Custom Adapter) ----------
-        muatDaftar()
+//        muatDaftar()
+        binding.listViewJadwal.setOnItemLongClickListener { parent, _, position, _ ->
+            val item = parent.getItemAtPosition(position) as JadwalModel
+            konfirmasiHapus(item)
+            true
+        }
+
 
         // ---------- ChipGroup Filter ----------
-        binding.chipGroupFilter.setOnCheckedStateChangeListener { _, checkedIds ->
-            val checkedId = checkedIds.firstOrNull() ?: R.id.chipSemua
-            val todayKey = keyFormat.format(today.time)
-            val mendatang = jadwalList.filter { it.dateKey >= todayKey }.sortedBy { it.dateKey }
-            val filtered = when (checkedId) {
-                R.id.chipPemeriksaan -> mendatang.filter { it.kategori == "Pemeriksaan" }
-                R.id.chipRutinitas -> mendatang.filter { it.kategori == "Rutinitas" }
-                R.id.chipImunisasi -> mendatang.filter { it.kategori == "Imunisasi" }
-                else -> mendatang // Semua
-            }
-            binding.listViewJadwal.adapter = JadwalAdapter(requireContext(), filtered)
-            binding.tvJumlahPengingat.text = "${filtered.size} Jadwal"
-            binding.tvJadwalKosong.visibility = if (filtered.isEmpty()) View.VISIBLE else View.GONE
-            aturTinggiListView()
+//        binding.chipGroupFilter.setOnCheckedStateChangeListener { _, checkedIds ->
+//            val checkedId = checkedIds.firstOrNull() ?: R.id.chipSemua
+//            val todayKey = keyFormat.format(today.time)
+//            val mendatang = jadwalList.filter { it.dateKey >= todayKey }.sortedBy { it.dateKey }
+//            val filtered = when (checkedId) {
+//                R.id.chipPemeriksaan -> mendatang.filter { it.kategori == "Pemeriksaan" }
+//                R.id.chipRutinitas -> mendatang.filter { it.kategori == "Rutinitas" }
+//                R.id.chipImunisasi -> mendatang.filter { it.kategori == "Imunisasi" }
+//                else -> mendatang // Semua
+//            }
+//            binding.listViewJadwal.adapter = JadwalAdapter(requireContext(), filtered)
+//            binding.tvJumlahPengingat.text = "${filtered.size} Jadwal"
+//            binding.tvJadwalKosong.visibility = if (filtered.isEmpty()) View.VISIBLE else View.GONE
+//            aturTinggiListView()
+//        }
+        binding.chipGroupFilter.setOnCheckedStateChangeListener { _, _ ->
+            terapkanFilter()                                   // [ROOM] logika dipindah ke fungsi
         }
 
         // ---------- Tombol Tambah Jadwal ----------
         binding.btnTambahJadwal.setOnClickListener {
-            Toast.makeText(ctx, "Tambah jadwal", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(ctx, "Tambah jadwal", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), JadwalFormActivity::class.java)
+            intent.putExtra(JadwalFormActivity.EXTRA_DATE, tanggalDipilih)
+            startActivity(intent)
         }
+    }
+    // [ROOM] Muat ulang data setiap halaman tampil (termasuk setelah form ditutup)
+    override fun onResume() {
+        super.onResume()
+        if (_binding != null) muatDariDatabase()
+    }
+    // [ROOM] Baca semua jadwal dari SQLite, lalu segarkan kalender & daftar
+    private fun muatDariDatabase() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val hasil = db.jadwalDao().getAll()
+            jadwalList.clear()
+            jadwalList.addAll(hasil.map { it.toModel() })
+            renderKalender()
+            terapkanFilter()
+        }
+    }
+    private fun konfirmasiHapus(item: JadwalModel) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Hapus Jadwal")
+            .setMessage("Yakin ingin menghapus \"${item.title}\"?")
+            .setPositiveButton("Ya") { _, _ -> hapusJadwal(item) }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+    private fun hapusJadwal(item: JadwalModel) {
+        if (_binding == null) return
+        viewLifecycleOwner.lifecycleScope.launch {
+            db.jadwalDao().deleteById(item.id)
+            muatDariDatabase()
+        }
+    }
+    // [ROOM] Isi ListView sesuai chip yang sedang aktif (isi lama dari listener chip + muatDaftar)
+    private fun terapkanFilter() {
+        val todayKey = keyFormat.format(today.time)
+        val mendatang = jadwalList.filter { it.dateKey >= todayKey }.sortedBy { it.dateKey }
+        val filtered = when (binding.chipGroupFilter.checkedChipId) {
+            R.id.chipPemeriksaan -> mendatang.filter { it.kategori == "Pemeriksaan" }
+            R.id.chipRutinitas -> mendatang.filter { it.kategori == "Rutinitas" }
+            R.id.chipImunisasi -> mendatang.filter { it.kategori == "Imunisasi" }
+            else -> mendatang // Semua
+        }
+        binding.listViewJadwal.adapter = JadwalAdapter(requireContext(), filtered)
+        binding.tvJumlahPengingat.text = "${filtered.size} Jadwal"
+        binding.tvJadwalKosong.visibility = if (filtered.isEmpty()) View.VISIBLE else View.GONE
+        aturTinggiListView()
     }
 
     // Gambar ulang kalender: 42 sel (6 baris x 7 kolom), minggu dimulai hari Senin

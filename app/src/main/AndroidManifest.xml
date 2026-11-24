@@ -47,6 +47,10 @@
             android:name=".Edukasi.EdukasiActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Jadwal.Form.JadwalFormActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

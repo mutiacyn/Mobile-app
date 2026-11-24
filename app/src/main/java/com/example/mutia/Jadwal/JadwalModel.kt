@@ -13,7 +13,8 @@ data class JadwalModel(
     val waktu: String,        // teks yang ditampilkan
     val status: String,       // Terjadwal / Mendatang / Belum dilakukan
     val kategori: String,     // Pemeriksaan / Rutinitas / Imunisasi
-    val iconRes: Int
+    val iconRes: Int,
+    val id: Int = 0
 )
 
 // Membuat bentuk (kotak membulat / lingkaran) lewat kode
