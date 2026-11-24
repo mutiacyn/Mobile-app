@@ -14,7 +14,8 @@ import com.google.android.material.snackbar.Snackbar
 
 class JadwalAdapter(
     context: Context,
-    private val jadwals: List<JadwalModel>
+    private val jadwals: List<JadwalModel>,
+    private val onLongClick: ((JadwalModel) -> Unit)? = null
 ) : ArrayAdapter<JadwalModel>(context, 0, jadwals) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -49,6 +50,10 @@ class JadwalAdapter(
         // Aksi klik dipasang di adapter, tepat sebelum return view
         view.setOnClickListener {
             Snackbar.make(parent, "${data.title}: ${data.waktu}", Snackbar.LENGTH_SHORT).show()
+        }
+        view.setOnLongClickListener {
+            onLongClick?.invoke(data)
+            true
         }
         return view
     }

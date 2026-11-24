@@ -180,7 +180,10 @@ class JadwalFragment : Fragment() {
             R.id.chipImunisasi -> mendatang.filter { it.kategori == "Imunisasi" }
             else -> mendatang // Semua
         }
-        binding.listViewJadwal.adapter = JadwalAdapter(requireContext(), filtered)
+//        binding.listViewJadwal.adapter = JadwalAdapter(requireContext(), filtered)
+        binding.listViewJadwal.adapter = JadwalAdapter(requireContext(), filtered) { item ->
+            konfirmasiHapus(item)
+        }
         binding.tvJumlahPengingat.text = "${filtered.size} Jadwal"
         binding.tvJadwalKosong.visibility = if (filtered.isEmpty()) View.VISIBLE else View.GONE
         aturTinggiListView()
